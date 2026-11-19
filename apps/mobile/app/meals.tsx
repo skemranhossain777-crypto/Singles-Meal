@@ -1,0 +1,5 @@
+
+import { ScrollView, View, Text, Image, StyleSheet } from "react-native";
+const items=[["Grilled Chicken Power Bowl","৳390 · 480 kcal","https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900"],["Lentil & Roasted Veg Bowl","৳290 · 430 kcal","https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900"]];
+export default function Meals(){return <ScrollView contentContainerStyle={s.page}><Text style={s.title}>Explore meals</Text><Text style={s.desc}>Fresh meals with clear nutrition information.</Text>{items.map(x=><View key={x[0]} style={s.card}><Image source={{uri:x[2]}} style={s.image}/><Text style={s.name}>{x[0]}</Text><Text style={s.price}>{x[1]}</Text></View>)}</ScrollView>}
+const s=StyleSheet.create({page:{padding:20,paddingTop:60},title:{fontSize:30,fontWeight:"900"},desc:{color:"#718078",marginTop:8,marginBottom:20},card:{backgroundColor:"white",borderRadius:22,padding:12,marginBottom:16},image:{height:190,borderRadius:16},name:{fontWeight:"900",fontSize:17,marginTop:12},price:{color:"#246B45",fontWeight:"800",marginTop:6}});

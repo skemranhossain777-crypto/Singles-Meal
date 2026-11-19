@@ -1,0 +1,9 @@
+
+"use client";
+import Link from "next/link";
+import { useCart } from "@/components/CartProvider";
+import { formatBDT, nutritionTotals } from "@shared/index";
+export default function CartPage(){
+ const {lines,remove,total,clear}=useCart(); const nutrition=nutritionTotals(lines);
+ return <main className="mx-auto max-w-4xl px-5 py-12"><h1 className="text-4xl font-black">Your basket</h1>{!lines.length?<div className="mt-8 rounded-3xl bg-white p-10 text-center"><p>Your basket is waiting for something delicious.</p><Link href="/meals" className="mt-5 inline-block rounded-full bg-forest px-6 py-3 font-bold text-white">Explore meals</Link></div>:<div className="mt-8 grid gap-6 md:grid-cols-[1fr_320px]"><div className="space-y-3">{lines.map(x=><div key={x.meal.id} className="flex items-center justify-between rounded-2xl bg-white p-4"><div><b>{x.meal.name} × {x.quantity}</b><p className="text-sm text-slate-500">{formatBDT(x.meal.price_bdt*x.quantity)}</p></div><button onClick={()=>remove(x.meal.id)} className="text-sm font-bold text-red-600">Remove</button></div>)}</div><aside className="h-fit rounded-3xl bg-mint p-6"><h2 className="text-xl font-black">Order summary</h2><p className="mt-4 flex justify-between">Subtotal <b>{formatBDT(total)}</b></p><p className="mt-2 flex justify-between">Calories <b>{nutrition.calories} kcal</b></p><p className="mt-2 flex justify-between">Protein <b>{nutrition.protein_g}g</b></p><p className="mt-2 flex justify-between">Carbs <b>{nutrition.carbs_g}g</b></p><p className="mt-2 flex justify-between">Fat <b>{nutrition.fat_g}g</b></p><p className="mt-4 text-xs text-slate-500">Delivery fee and final payable amount are confirmed at checkout.</p><Link href="/checkout" className="mt-6 block rounded-full bg-forest px-5 py-3 text-center font-bold text-white">Continue to checkout</Link><button onClick={clear} className="mt-3 w-full text-sm text-slate-500">Clear basket</button></aside></div>}</main>;
+}

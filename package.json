@@ -1,0 +1,15 @@
+
+{
+  "name": "singles-meal",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev:web": "pnpm --filter @singles-meal/web dev",
+    "dev:mobile": "pnpm --filter @singles-meal/mobile start",
+    "build:web": "pnpm --filter @singles-meal/web build",
+    "lint": "pnpm -r lint"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
