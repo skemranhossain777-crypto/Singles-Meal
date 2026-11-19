@@ -2,7 +2,9 @@
 import { createClient } from "@supabase/supabase-js";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const key =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 const isConfigured = Boolean(
   url &&
@@ -13,4 +15,5 @@ const isConfigured = Boolean(
 
 export const supabase = isConfigured ? createClient(url!, key!) : null;
 export const hasSupabase = Boolean(supabase);
+
 

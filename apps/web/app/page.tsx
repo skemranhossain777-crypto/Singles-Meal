@@ -1,9 +1,11 @@
 
 import Link from "next/link";
 import { ArrowRight, Activity, CalendarCheck, Truck, Leaf } from "lucide-react";
-import { meals } from "@/lib/meals";
+import { getMeals } from "@/lib/meals";
 import { MealCard } from "@/components/MealCard";
-export default function Home() {
+
+export default async function Home() {
+  const meals = await getMeals();
   return <main>
     <section className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-14 md:grid-cols-[1.02fr_.98fr] md:py-24">
       <div><p className="mb-5 inline-flex rounded-full bg-mint px-4 py-2 text-xs font-extrabold tracking-[.16em] text-forest">FOOD THAT FITS YOUR LIFE</p>
@@ -19,3 +21,4 @@ export default function Home() {
     <section className="mx-5 rounded-[2rem] bg-forest px-6 py-14 text-center text-white md:mx-auto md:max-w-7xl"><CalendarCheck className="mx-auto" size={34}/><h2 className="mt-4 text-3xl font-black">Make healthy eating your new normal.</h2><p className="mx-auto mt-3 max-w-xl text-white/75">Choose a flexible weekly meal plan and let Singles Meal take care of the everyday food decisions.</p><Link href="/plans" className="mt-7 inline-block rounded-full bg-white px-7 py-3.5 font-bold text-forest">Explore meal plans</Link></section>
   </main>;
 }
+

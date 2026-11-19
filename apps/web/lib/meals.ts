@@ -1,5 +1,6 @@
 
 import type { Meal } from "@shared/index";
+import { supabase } from "./supabase";
 
 export const meals: Meal[] = [
   { id: "m1", name: "Grilled Chicken Power Bowl", name_bn: "গ্রিলড চিকেন পাওয়ার বোল",
@@ -33,3 +34,35 @@ export const meals: Meal[] = [
     image_url: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=900",
     tags: ["Breakfast", "Energy"], allergens: ["Milk", "Gluten"], available: true }
 ];
+
+export async function getMeals(): Promise<Meal[]> {
+  if (!supabase) return meals;
+  try {
+    const { data, error } = await supabase
+      .from("meals")
+      .select("*")
+      .eq("is_available", true);
+
+    if (error || !data || data.length === 0) return meals;
+
+    return data.map((item) => ({
+      id: item.id,
+      name: item.name,
+      name_bn: item.name_bn ?? undefined,
+      description: item.description ?? "",
+      category: item.category,
+      price_bdt: Number(item.price_bdt),
+      calories: Number(item.calories),
+      protein_g: Number(item.protein_g),
+      carbs_g: Number(item.carbs_g),
+      fat_g: Number(item.fat_g),
+      image_url: item.image_url ?? "",
+      tags: item.tags ?? [],
+      allergens: item.allergens ?? [],
+      available: Boolean(item.is_available),
+    }));
+  } catch {
+    return meals;
+  }
+}
+
